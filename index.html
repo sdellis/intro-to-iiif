@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Intro to IIIF (for front-end developers)</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<link rel="stylesheet" href="css/overrides.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>Intro to IIIF</h1>
+					<h3>A hands-on guide to <br/>unlocking the world's images</h3>
+					<p>
+						<small>Created for edUi 2017 by <a href="http://sdellis.com">Shaun Ellis</a> / <a href="http://twitter.com/sdellis">@sdellis</a></small>
+					</p>
+						<a class="logo" href="http://iiif.io" title="IIIF : International Image Interoperability Framework" />IIIF</a>
+				</section>
+
+				<section>
+					<section>
+						<h2>Overview</h2>
+						<p>IIIF is a series of APIs (application programming interface) that worked together to enable access for images on the Web.
+						What the heck does that mean?</p>
+					</section>
+					<section>
+						<p>For one thing, it means that content providers can publish high-resolution images that are quickly viewable at great detail.</p>
+					</section>
+					<section>
+						<p>It also means that IIIF users can read and collaboratively annotate a published books.</p>
+					</section>
+					<section>
+						<p>It means a whole lot of things, and this overview aims to break things down.</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>What is IIIF?</h2>
+						<p>I said earlier that IIIF is a series of APIs that allows you to access images on the Web.
+							These APIs are community and use case driven and really were formed out of common needs from
+							organizations delivering images on the Web.</p>
+					</section>
+					<section>
+						<p>This can be as simple as just putting an image tag in a webpage.</p>
+						<p><img src="https://stacks.stanford.edu/image/iiif/hg676jb4964%2F0380_796-44/1015,1460,799,824/pct:25/0/default.jpg"></p>
+					</section>
+					<section>
+						<p>Or as advanced as reading a large book in its entirety.</p>
+						<iframe src="https://universalviewer.io/uv.html?manifest=https://api.bl.uk/metadata/iiif/ark:/81055/vdc_00000004216E/manifest.json" style="width: 100%; height: 500px;"></iframe>
+					</section>
+					<section>
+						<p>Both of these use cases utilize IIIF. The API specifications enable all of this to be made possible in a standardized way. Simply put, IIIF enables organizations to solve common problems together.</p>
+						<p>IIIF not only refers to these APIs now, but now also to the community of content providers, software developers, and researchers who are using the technology.</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>What can IIIF do?</h2>
+						<p>We just saw that IIIF has several applications for using images on the Web. There are many more.</p>
+					</section>
+					<section>
+						<p>IIIF can be used for georeferencing historic maps</p>
+						<figure class="figure">
+					    <a href="http://www.georeferencer.com/">
+					      <img src="https://www.learniiif.org/assets/georeferencer.jpg" class="img-fluid">
+					    </a>
+					    <figcaption class="figure-caption">GeoRefencer</figcaption>
+					  </figure>
+					</section>
+					<section>
+						<p>Or work with others to annotatate a manuscript</p>
+						<figure class="figure">
+					    <a href="http://projectmirador.org/">
+					      <img src="https://www.learniiif.org/assets/mirador-anno.gif" class="img-fluid">
+					    </a>
+					  </figure>
+					</section>
+					<section>
+						<p>Because these images are delivered using the IIIF API specifications. Different viewers, clients, and applications can reuse the exact same content!</p>
+						<p>The API specifications have been driven by community use cases and integration with other Web standards.</p>
+					</section>
+					<section>
+						<p>As of September 2017 the current IIIF Technical Specifications are:</p>
+							<ul>
+							  <li><a href="http://iiif.io/api/image/2.1/">IIIF Image API</a></li>
+							  <li><a href="http://iiif.io/api/presentation/2.1">IIIF Presentation API</a></li>
+							  <li><a href="http://iiif.io/api/auth/1.0">IIIF Authentication API</a></li>
+							  <li><a href="http://iiif.io/api/search/1.0">IIIF Search API</a></li>
+							</ul>
+						<p>The two most established IIIF APIs are the Image and Presentation APIs. Let’s get started with the Image API.</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Image API</h2>
+						<p>The IIIF Image API is designed for standardization of requesting and delivering images on the Web. What does that mean beyond the <img> tag?</p>
+					</section>
+					<section>
+						<p>We saw earlier that you can use it to embed an image in a webpage. Here is that example again.</p>
+						<iframe width="100%" height="300" src="https://jsfiddle.net/sdellis/vjpgsbfw/embedded/result,html/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+						<p>This example uses the Image API to request an image from a IIIF image server. If you click on “HTML” you can see the URL that is being requested.</p>
+					</section>
+					<section>
+						<pre><code class="hljs">&lt;img src="https://stacks.stanford.edu/image/iiif/hg676jb4964%2F0380_796-44/1015,1460,799,824/pct:50/0/default.jpg"&gt;</code></pre>
+						<p>This URL is crafted to extract a specific region, at a relative size, from the high quality original image.
+							The original image is measured at 5426 x 3820 pixels and has a file size of 4.7MB. Having users download the
+							entire file is inefficient and will likely provide a poor user experience. The IIIF Image API allows you to
+							serve out derivative versions of these images in a standardized way, without having to generate derivates
+							in advance.</p>
+					</section>
+					<section>
+						<h3>Zoomable Images</h3>
+						<iframe src="https://mejackreed.github.io/Leaflet-IIIF/examples/index.html?url=https://stacks.stanford.edu/image/iiif/hg676jb4964%2F0380_796-44/info.json" frameborder="0" width="100%" height="500px"></iframe>
+					</section>
+					<section>
+						<p>Several different libraries now exist to use the IIIF Image API to provide a “deep zoom” for the images.
+							The previous slide contains an example of the Leaflet-IIIF displaying the same image we looked at previously.
+							Here you can see the entire image and zoom in with great detail. Using tiled zoom enables viewing of high
+							resolution images without needing to download the full resolution images.</p>
+					</section>
+					<section>
+						<h3>How does all of this work?</h3>
+						<p>The IIIF Image API server knows how to efficiently deliver these images to the viewer client.
+							The viewer client knows what types of images that it can request from the server.
+							The client gets this information from the server through a Image Information request.</p>
+
+						<p>Let’s dive into more of how the Image API works.</p>
+					</section>
+				<section>
+					<h3>Image API Playground</h3>
+					<p>The IIIF Image API makes requests to images using a specified URI syntax which changes what image is requested.
+						The syntax consists of a way to identify the image to be requested, as well as additional parameters that can be
+						used to modify the way the image comes back. These request parameters can modify the region of the image, its size,
+						rotation, quality, and the image format.
+						See the <a href="http://iiif.io/api/image/2.1/#image-request-parameters">API documentation</a> for parameter options
+						you can use.</p>
+
+
+					<div class="highlight"><span>{</span><span class="err">scheme</span><span>}</span><span class="err">://</span><span>{</span><span class="err">server</span><span class="p">}{</span><span class="err">/prefix</span><span>}</span><span class="err">/</span><span class="p">{</span><span class="err">identifier</span><span class="p">}</span><span class="err">/</span><span class="p">{</span><span class="err">region</span><span class="p">}</span><span class="err">/</span><span>{</span><span class="err">size</span><span class="p">}</span><span class="err">/</span><span class="p">{</span><span class="err">rotation</span><span class="p">}</span><span class="err">/</span><span class="p">{</span><span class="err">quality</span><span class="p">}</span><span class="err">.</span><span class="p">{</span><span class="err">format</span><span class="p">}</span></div>
+
+				</section>
+				<section>
+					<iframe src="http://imageapiplayground.surge.sh/" frameborder="0" width="100%" height="500px"></iframe>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,14 @@
+.logo {
+  background: transparent url(http://iiif.io/img/logo-iiif-34x30.png) center 8px no-repeat;
+  display: block;
+  font-size: 0 !important;
+  height: 40px;
+}
+
+.highlight span {
+  font-size: 0.6em;
+}
+
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2; }

@@ -147,7 +147,7 @@
 
 						<p>Let’s dive into more of how the Image API works.</p>
 					</section>
-				<section>
+					<section>
 					<h3>Image API Playground</h3>
 					<p>The IIIF Image API makes requests to images using a specified URI syntax which changes what image is requested.
 						The syntax consists of a way to identify the image to be requested, as well as additional parameters that can be
@@ -160,8 +160,154 @@
 					<div class="highlight"><span>{</span><span class="err">scheme</span><span>}</span><span class="err">://</span><span>{</span><span class="err">server</span><span class="p">}{</span><span class="err">/prefix</span><span>}</span><span class="err">/</span><span class="p">{</span><span class="err">identifier</span><span class="p">}</span><span class="err">/</span><span class="p">{</span><span class="err">region</span><span class="p">}</span><span class="err">/</span><span>{</span><span class="err">size</span><span class="p">}</span><span class="err">/</span><span class="p">{</span><span class="err">rotation</span><span class="p">}</span><span class="err">/</span><span class="p">{</span><span class="err">quality</span><span class="p">}</span><span class="err">.</span><span class="p">{</span><span class="err">format</span><span class="p">}</span></div>
 
 				</section>
+					<section>
+						<h3>Image API Playground</h3>
+						<iframe src="http://imageapiplayground.surge.sh/" frameborder="0" width="100%" height="500px"></iframe>
+					</section>
+					<section>
+						<p>Now that we have learned the basics of requesting images, we need to figure out how to request images that are grouped together.</p>
+					</section>
+				</section>
 				<section>
-					<iframe src="http://imageapiplayground.surge.sh/" frameborder="0" width="100%" height="500px"></iframe>
+					<section>
+						<h2>Presentation API</h2>
+						<p>The IIIF Presentation API gives us a specification for “presenting” images. A common example to think about this is a book.</p>
+					</section>
+					<section>
+						<p>If you want to display a group of images that represent pages in a book, you first need to know a few things about that book. Likely you will want to know the title of the book. You need to know what pages are in the book and the order of those pages. Perhaps you also want to show the book two pages at a time, with the pages facing the correct directions.</p>
+					</section>
+					<section>
+						<p>This and much more can be accomplished using the <a href="http://iiif.io/api/presentation/2.1/">IIIF Presentation API</a>.</p>
+					</section>
+					<section>
+						<h3>Core Concepts</h3>
+						<p>The Presentation API consists of a JSON-LD server response that specifies how resources
+							(images) should be presented. To accomplish this the API response consists of several
+							different resources that inform the presentation.
+							There are a few <a href="http://iiif.io/api/presentation/2.1/#resource-type-overview">base concepts</a> that are used throughout the IIIF documentation and community and are important to understand.</p>
+					</section>
+					<section>
+						<h4>Manifest</h4>
+						<p>A manifest represents the overall description of the “thing” (object) to presented. This could be a book, a photograph, or an image of a tree.</p>
+					</section>
+					<section>
+						<h4>Manifest Example</h4>
+						<pre><code class="hljs" data-trim contenteditable>
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "http://example.org/iiif/book1/manifest",
+
+  "label": "Book 1",
+  "metadata": [
+    {"label": "Author", "value": "Anne Author"},
+    {"label": "Published", "value": [
+        {"@value": "Paris, circa 1400", "@language": "en"},
+        {"@value": "Paris, environ 14eme siecle", "@language": "fr"}
+        ]
+    }
+  ],
+  "description": "A longer description of this example book.",
+  "navDate": "1856-01-01T00:00:00Z",
+
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "attribution": "Provided by Example Organization",
+  "service": {
+    "@context": "http://example.org/ns/jsonld/context.json",
+    "@id": "http://example.org/service/example",
+    "profile": "http://example.org/docs/example-service.html"
+  },
+...
+  "sequences": [
+...
+						</code></pre>
+					</section>
+					<section>
+						<h4>Sequence</h4>
+						<p>The next key concept, is a sequence. A sequence defines the order of view of the object. A manifest can have more than one valid sequence if for some reason it has been reordered.</p>
+					</section>
+					<section>
+						<h4>Sequence Example</h4>
+						<pre><code class="hljs" data-trim contenteditable>
+...
+  "sequences": [
+    {
+      "@id": "http://example.org/iiif/book1/sequence/normal",
+      "@type": "sc:Sequence",
+      "label": "Current Page Order",
+      "viewingDirection": "left-to-right",
+      "viewingHint": "paged",
+      "canvases": [
+...
+						</code></pre>
+					</section>
+					<section>
+						<h4>Canvas</h4>
+						<p>Canvases are used as a container for adding content to it. For instance, a canvas could contain both an image of a book page and associated transcriptions for that page.</p>
+					</section>
+					<section>
+						<h4>Canvas Example</h4>
+						<pre><code class="hljs" data-trim contenteditable>
+...
+  "canvases": [
+    {
+      "@id": "http://example.org/iiif/book1/canvas/p1",
+      "@type": "sc:Canvas",
+      "label": "p. 1",
+      "height":1000,
+      "width":750,
+      "images": [
+...
+						</code></pre>
+					</section>
+					<section>
+						<h4>Content</h4>
+						<p>Content is used to describe viewable resources that can be placed on a canvas. These could be images that represent a book page, transcription text, or annotation notes.</p>
+					</section>
+					<section>
+						<h4>Content Example</h4>
+						<pre><code class="hljs" data-trim contenteditable>
+...
+"images": [
+  {
+    "@type": "oa:Annotation",
+    "motivation": "sc:painting",
+    "resource":{
+      "@id": "http://example.org/iiif/book1/res/page1.jpg",
+      "@type": "dctypes:Image",
+      "format": "image/jpeg",
+      "service": {
+        "@context": "http://iiif.io/api/image/2/context.json",
+        "@id": "http://example.org/images/book1-page1",
+        "profile": "http://iiif.io/api/image/2/level1.json"
+      },
+      "height":2000,
+      "width":1500
+    },
+    "on": "http://example.org/iiif/book1/canvas/p1"
+  }
+],
+...
+						</code></pre>
+					</section>
+					<section>
+						<p>There are some <a href="http://iiif.io/api/presentation/2.1/#additional-types">more resource types</a> used in the IIIF Presentation API but lets just focus on these now.</p>
+					</section>
+					<section>
+						<h4>Back to the example</h4>
+						<p>Now that we have somewhat of an idea of what these types are, lets relate them back to our example of the book.</p>
+					</section>
+					<section>
+						<ul>
+						  <li><strong>Manifest</strong> - Basic information about the book, including whether or not the images should be <a href="http://iiif.io/api/presentation/2.1/#viewinghint">viewed as pages</a></li>
+						  <li><strong>Sequence</strong> - Order of the “pages” of the book</li>
+						  <li><strong>Canvas</strong> - Virtual container of the “page” of each book</li>
+						  <li><strong>Content</strong> - Image of each page, to be added to the canvas</li>
+						</ul>
+					</section>
+					<section>
+						<p>A IIIF client consuming this response would now know how to display the book, associated metadata for the book, and what images represent the pages and their order.</p>
+					</section>
 				</section>
 			</div>
 		</div>

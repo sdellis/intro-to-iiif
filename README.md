@@ -12,7 +12,7 @@ Instructions go here.
 # Create a IIIF Manifest
 Instructions go here.
 
-# Instructions for IIIF Vue App
+# Create a IIIF Vue App
 
 ## Install vue-cli and create a project
 ```
@@ -24,16 +24,16 @@ $ npm install (have backup copy on flash drives)
 $ npm run dev
 ```
 
-## Add our IIIF helper scripts
+## Add our IIIF helper libraries
 
 ### Manifesto
-Manifesto is a library of convenience methods for working with IIIF Resources
+Manifesto is a library of convenience methods for working with IIIF Resources.
 ```
 $ npm install manifesto.js --save
 ```
 ### Manifestions
-Manifestations are prebuilt libraries of components that make it easy to work
-with IIIF Resources (via Manifesto mixins) in the framework of your choice
+Manifestations are prebuilt component libraries that make it easy to work
+with IIIF Resources (via Manifesto mixins) in the framework of your choice.
 ```
 $ npm install manifestation-vue --save
 ```

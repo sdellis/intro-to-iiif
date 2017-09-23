@@ -49,7 +49,7 @@ curl -o src/data/manifest.js https://rawgit.com/sdellis/edb41a691ea9933bf25ab482
 ```
 
 ## Build your app
-Open src/App.vue and change `import Hello from './components/Hello'` to
+Open `src/App.vue` and change `import Hello from './components/Hello'` to
 ```
 import {mixins, Tree, Thumbnails} from 'manifestation-vue'
 import manifest from './data/manifest'

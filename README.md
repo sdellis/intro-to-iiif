@@ -7,10 +7,13 @@ For the hands-on section we will install an image server, create a manifest,
 and build a custom app with our manifest.
 
 # Install IIIF Image Server
-Instructions go here.
+[Instructions](https://iiif.github.io/training/intro-to-iiif/IIIF_SERVER.html)
 
 # Create a IIIF Manifest
-Instructions go here.
+[Instructions](https://iiif.github.io/training/intro-to-iiif/IIIF_MANIFESTS.html)
+
+# Create a Slideshow from your Manifest
+// TODO
 
 # Create a IIIF Vue App
 

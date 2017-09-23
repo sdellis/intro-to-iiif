@@ -41,7 +41,6 @@ $ npm install manifestation-vue --save
 ## Add some Data (IIIF manifest)
 ```
 mkdir src/data
-cd src/data
 curl -o src/data/manifest.js https://rawgit.com/sdellis/edb41a691ea9933bf25ab482b7f6ba2e/raw/a4c5f9155c3e09938bc20345623d3f52fbb21261/manifest.js
 ```
 

@@ -14,6 +14,7 @@ and build a custom app with our manifest.
 
 # Create a Slideshow from your Manifest
 // TODO
+// https://jsfiddle.net/0f7w6f4j/4/
 
 # Create a IIIF Vue App
 

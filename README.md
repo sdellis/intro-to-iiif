@@ -13,8 +13,7 @@ and build a custom app with our manifest.
 [Instructions](https://iiif.github.io/training/intro-to-iiif/IIIF_MANIFESTS.html)
 
 # Create a Slideshow from your Manifest
-// TODO
-// https://jsfiddle.net/0f7w6f4j/4/
+We are now going to create a slideshow from our manifest.
 
 ## Install vue-cli and create a project
 Prerequisite: [install the latest node and npm via nvm](https://github.com/creationix/nvm).

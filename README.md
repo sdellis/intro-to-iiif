@@ -320,7 +320,12 @@ Save what you just did and type the following in the terminal:
 ```
 npm start
 ```
-
+# Additional Resources
+[Learn IIIF](https://www.learniiif.org/) by Jack Reed
+[IIIF Workshop](https://iiif.github.io/training/intro-to-iiif/) by Drew Winget and Jack Reed
+[Intro to IIIF](http://ronallo.com/iiif-workshop/) by Jason Ronallo
+[IIIF Awesome](https://github.com/IIIF/awesome-iiif/blob/master/readme.md)
 
 ## License
-Creative Commons Attribution
+![](https://www.learniiif.org/assets/by.svg)
+This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).

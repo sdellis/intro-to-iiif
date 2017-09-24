@@ -16,14 +16,198 @@ and build a custom app with our manifest.
 // TODO
 // https://jsfiddle.net/0f7w6f4j/4/
 
-# Create a IIIF Vue App
+## Install vue-cli and create a project
+Prerequisite: [install the latest node and npm via nvm]().
+```
+$ npm install -g vue-cli
+$ vue init webpack edui-slideshow
+# say 'No' to the the linting and test components to keep it slim for the workshop
+$ cd edui-slideshow
+$ npm install (have backup copy on flash drives)
+$ npm run dev
+```
+
+Open `src/App.vue` and Find/Replace "Hello" with "Slideshow":
+```
+import Slideshow from './components/Slideshow' // <-- HERE
+
+export default {
+  name: 'app',
+  components: {
+    Slideshow // <-- AND HERE
+  }
+}
+```
+
+Make a copy of `src/components/Hello.vue` and rename it to `Slideshow.vue`.
+Open your new file in an editor and paste this into the template at the top:
+```
+<slideshow>
+  <p>
+    <a @click="prev">Previous</a> || <a @click="next">Next</a>
+  </p>
+
+  <div v-for="number in [currentNumber]" transition="fade">
+    <img :src="images[Math.abs(currentNumber) % images.length].display_src"
+         v-on:mouseover="stopRotation"
+         v-on:mouseout="startRotation"/>
+  </div>
+</slideshow >
+```
+
+Change the name and data properties in the `<script>` section of the component:
+```
+name: 'slideshow',
+data () {
+  return {
+    images: [],
+    currentNumber: 0,
+    timer: null
+  }
+},
+```
+Now let's add some methods after the data property:
+```
+methods: {
+    startRotation: function() {
+        this.timer = setInterval(this.next, 3000);
+    },
+
+    stopRotation: function() {
+        clearTimeout(this.timer);
+        this.timer = null;
+    },
+
+    next: function() {
+        this.currentNumber += 1
+    },
+    prev: function() {
+        this.currentNumber -= 1
+    }
+}
+```
+
+Paste the following into the style section:
+```
+.fade-transition {
+  transition: all 0.8s ease;
+  overflow: hidden;
+  visibility: visible;
+  opacity: 1;
+  position: absolute;
+}
+.fade-enter, .fade-leave {
+  opacity: 0;
+  visibility: hidden;
+}
+```
+Finally, let's add our manifest to the project. Copy your manifest.json
+that you downloaded into `data/manifest.js`.
+```
+$ mkdir data
+$ cp ~/Desktop/manifest.json data/manifest.js
+```
+
+We're going to assign it a variable name and export it as a component. Typically, you would fetch it over the network,
+but let's keep it simple for now:
+
+```
+var manifest = { your manifest json ... }
+export default manifest
+```
+
+Now we need to get the images from our Manifest into our slideshow. Manifesto already has a method
+for retrieving the images in a Manifest, as well as many other convenience methods,
+so let's leverage that:
+```
+$ npm install manifesto.js --save
+```
+
+Open `src/components/Slideshow` and paste these lines in after the `<script>` tag:
+```
+import manifest from '../data/manifest'
+import manifesto from '../../node_modules/manifesto.js/dist/server/manifesto.js'
+
+window.manifestation = manifestation
+```
+Now we can actually play with Manifesto in the console:
+```
+$ npm run dev
+```
+In your console (CMD+Opt i), type:
+```
+manifestation.getLabel()
+```
+You should see an object containing the label you gave your manifest.
+
+Now type:
+```
+s = manifestation.getSequences()
+s[0].getCanvases()
+```
+You can see all the canvases with the image urls. It's going to be much easier for us
+to transform this data with our own methods that we can "mixin" and extend Manifesto.
+Let's create a file called `mixins/manifesto-vue-mixins.js` and add the following code:
+
+```
+const ManifestoVueMixins = {
+
+  mainSequence: function () {
+    // mainSequence is the one without an id (not ideal since it could have an id)
+    const s = this.getSequences()
+    const main_sequence = s.filter((seq) => seq.id !== 'undefined')
+    return main_sequence[0]
+  },
+
+  getCanvasMainThumb: function (canvas) {
+    const images = canvas.getImages()
+    const services = images[0].getResource().getServices()
+    return services[0].id + '/full/400,/0/default.jpg'
+  },
+
+  getCanvasCode: function (canvas_id) {
+    const arr = canvas_id.split('/')
+    return arr.slice(-1)[0]
+  },
+
+  photos: function () {
+    const s = this.mainSequence()
+    const canvases = s.getCanvases()
+    return canvases.map(canvas => ({
+      code: this.getCanvasCode(canvas.id),
+      caption: canvas.getLabel(),
+      likes: 0,
+      id: canvas.id,
+      display_src: this.getCanvasMainThumb(canvas)
+    }))
+  },
+
+}
+
+export default ManifestoVueMixins
+```
+Now lets actually create the mixin in the Slideshow.vue component:
+```
+import mixins from '../mixins/manifesto-vue-mixins'
+const manifestation = Object.assign(manifesto.create(JSON.stringify(manifests[0])), mixins)
+```
+And add this to the data object:
+```
+images: manifestation.photos(),
+```
+Now fire up the app, and we should be seeing a slideshow!
+```
+npm start
+```
+
+# Create a IIIF Vue App with manifestation-vue (a component library)
 
 ## Install vue-cli and create a project
 ```
-$ npm install -g vue-cli
-$ vue init webpack my-project
+$ cd ..
+$ vue init webpack edui-book
 # say 'No' to the the linting and test components to keep it slim for the workshop
-$ cd my-project
+$ cd edui-book
 $ npm install (have backup copy on flash drives)
 $ npm run dev
 ```

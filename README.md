@@ -6,13 +6,13 @@ Adapted from Jack Reed's Learn IIIF work.
 For the hands-on section we will install an image server, create a manifest,
 and build a custom app with our manifest.
 
-# Install IIIF Image Server
+# Exercise 1: Install IIIF Image Server
 [Instructions](https://iiif.github.io/training/intro-to-iiif/IIIF_SERVER.html)
 
-# Create a IIIF Manifest
+# Exercise 2: Create a IIIF Manifest
 [Instructions](https://iiif.github.io/training/intro-to-iiif/IIIF_MANIFESTS.html)
 
-# Create a Slideshow from your Manifest
+# Exercise 3: Create a Slideshow from your Manifest
 We are now going to create a slideshow from our manifest.
 
 ## Install vue-cli and create a project
@@ -121,7 +121,7 @@ window.manifestation = manifestation // <-- This allows us to inspect the manife
 ```
 Now we can actually play with the "manifestation" in the console:
 ```
-$ npm run dev
+$ npm start
 ```
 In your console (CMD+Opt i), type:
 ```
@@ -191,7 +191,9 @@ Now spin up the app, and we should be seeing a slideshow!
 npm start
 ```
 
-# Create a IIIF Vue App with manifestation-vue (a component library)
+# Exercise 4: Create a IIIF Book App with manifestation-vue (a Vue.js component library)
+We will now use some prebuilt Vue.js components and mixins that makes it
+easier to build IIIF apps quickly.
 
 ## Install vue-cli and create a project
 ```
@@ -200,7 +202,7 @@ $ vue init webpack edui-book
 # say 'No' to the the linting and test components to keep it slim for the workshop
 $ cd edui-book
 $ npm install (have backup copy on flash drives)
-$ npm run dev
+$ npm start
 ```
 
 ## Add our IIIF helper libraries

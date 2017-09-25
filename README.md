@@ -1,6 +1,6 @@
 # Intro to IIIF
 ## Slide Deck for edUi 2017
-Adapted from Jack Reed's Learn IIIF work.
+[See the slides](http://sdellis.com/intro-to-iiif/). Adapted from Jack Reed's Learn IIIF work.
 
 # Hands On Instructions
 For the hands-on section we will install an image server, create a manifest,

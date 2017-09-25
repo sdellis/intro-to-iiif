@@ -14,9 +14,9 @@ and build a custom app with our manifest.
 
 # Exercise 3: Create a Slideshow from your Manifest
 We are now going to create a slideshow from our manifest.
+Prerequisite: [install the latest node and npm via nvm](https://github.com/creationix/nvm).
 
 ## Install vue-cli and create a project
-Prerequisite: [install the latest node and npm via nvm](https://github.com/creationix/nvm).
 ```
 $ npm install -g vue-cli
 $ vue init webpack edui-slideshow

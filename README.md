@@ -12,6 +12,17 @@ and build a custom app with our manifest.
 # Exercise 2: Create a IIIF Manifest
 [Instructions](https://iiif.github.io/training/intro-to-iiif/IIIF_MANIFESTS.html)
 
+If you skipped Exercise 1, here are a few images you can use:
+```
+https://libimages1.princeton.edu/loris/plum/s1%2F54%2F4b%2Fr1%2F2w-intermediate_file.jp2/info.json
+```
+```
+https://libimages1.princeton.edu/loris/plum/sx%2F63%2F3f%2F31%2F44-intermediate_file.jp2/info.json
+```
+```
+https://libimages1.princeton.edu/loris/plum/s3%2Fr0%2F74%2Fw9%2F2p-intermediate_file.jp2/info.json
+```
+
 # Exercise 3: Create a Slideshow from your Manifest
 We are now going to create a slideshow from our manifest.
 Prerequisite: [install the latest node and npm via nvm](https://github.com/creationix/nvm).
